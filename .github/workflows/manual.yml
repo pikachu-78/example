@@ -15,5 +15,6 @@ jobs:
          pip install --upgrade pip
     # Runs a single command using the runners shell
     - name: Request
+      if : steps.changed-files-specific.output.all_changed_files == "true"
       run: |
-         python3 ex.py 
+         python3 ex.py "${ steps.changed-files-specific.output.all_changed_files }"
