@@ -1,0 +1,19 @@
+name: Manual workflow
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup python
+      uses: actions/setup-python@v5
+    - name: Install dependencies
+      run: |
+         pip install --uprade pip
+    # Runs a single command using the runners shell
+    - name: Request
+      run: |
+         python3 ex.py 
