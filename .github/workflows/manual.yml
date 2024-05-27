@@ -2,7 +2,6 @@ name: Manual workflow
 on:
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,8 +12,15 @@ jobs:
     - name: Install dependencies
       run: |
          pip install --upgrade pip
-    # Runs a single command using the runners shell
-    - name: Request
-      if : steps.changed-files-specific.output.all_changed_files == "true"
+    - name: Get changed files
+      id: changed-files
       run: |
-         python3 ex.py "${ steps.changed-files-specific.output.all_changed_files }"
+        git fetch origin main
+        git diff --name-only origin/main...HEAD > changed_files.txt
+    - name: Display changed files
+      run: cat changed_files.txt
+    - name: Run Python script with changed files
+      if: steps.changed-files.outputs.changes # Check if there are changes
+      run: |
+        changed_files=$(cat changed_files.txt)
+        python3 ex.py "$changed_files"
