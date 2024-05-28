@@ -1,6 +1,11 @@
 name: Manual workflow
 on:
-  workflow_dispatch:
+  push:
+    branches:
+     - main
+    paths:
+     - conf/**
+
 
 jobs:
   build:
@@ -13,15 +18,12 @@ jobs:
       run: |
          pip install --upgrade pip
     - name: Get changed files
-      id: changed-files
-      run: |
-        git fetch origin main
-        git diff --name-only origin/main...HEAD > changed_files.txt
-        echo "::set-output name=changes::$(cat changed_files.txt)
-    - name: Display changed files
-      run: cat changed_files.txt
-    - name: Run Python script with changed files
-      if: steps.changed-files.outputs.changes # Check if there are changes
-      run: |
-        changed_files=$(cat changed_files.txt)
-        python3 ex.py "$changed_files"
+      id: changed-files-specific
+      uses: tj-actions/changed-files@v40
+      with:
+        files: |
+          conf/**
+    - name: Run API request
+      if: steps.changed-files-specific.outputs.any_changed == 'true'
+      run : |
+        python3 ex.py --changed_files="${{steps.changed-files-specific.outputs.all_changed_files }}"
