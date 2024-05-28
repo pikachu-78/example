@@ -1,10 +1,16 @@
-import sys
+import json
+import argparse
+import os
 
-print("hello word")
-print("angelina")
-def main():
-    changed_files = sys.argv[1]
-    print(f"Changed files: {changed_files}")
+parser = argparse.ArgumentParser()
+parser.add_argument("--changed_files", default="conf/**")
+args = parser.parse_args()
+changed_files = args.changed_files
 
-if __name__ == "__main__":
-    main()
+def main(changed_files):
+    with open(changed_files) as json_file:
+        teams = json.load(json_file)
+    for team_data in teams:
+        print(team_data['name'])
+        print(team_data['roll'])
+main(changed_files)
