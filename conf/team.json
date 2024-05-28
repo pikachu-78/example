@@ -1,10 +1,6 @@
 [
   {
-    name : "divya",
-    roll : "two"
-  },
-  {
-    name : "sam",
-    roll : "one"
+    "name" : "sam",
+    "roll" : "one"
   }
 ]
