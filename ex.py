@@ -1,5 +1,6 @@
 import json
 import argparse
+import sys
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
@@ -20,10 +21,9 @@ def process_file(file_path):
         print(f"File {file_path} is not a valid JSON file")
 
 def main(changed_files):
-    jfile_list = changed_files.split(" ")
+    jfile_list = sys.argv[1].split(" ")  # Correct usage of sys.argv
     for file_path in jfile_list:
         process_file(file_path)
 
 if __name__ == "__main__":
     main(changed_files)
-
