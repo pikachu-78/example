@@ -1,5 +1,5 @@
 name: Manual workflow
-on:
+on: 
   push:
     branches:
      - main
