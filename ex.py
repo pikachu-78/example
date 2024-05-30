@@ -8,7 +8,7 @@ parser.add_argument("--changed_files", default="conf/**", help="Space-separated 
 args = parser.parse_args()
 changed_files = args.changed_files
 
-def process_file(file_path):
+def main(file_path):
     try:
         with open(file_path) as json_file:
             teams = json.load(json_file)
@@ -20,10 +20,6 @@ def process_file(file_path):
     except json.JSONDecodeError:
         print(f"File {file_path} is not a valid JSON file")
 
-def main(changed_files):
-    jfile_list = sys.argv[1].split(" ")  # Correct usage of sys.argv
-    for file_path in jfile_list:
-        process_file(file_path)
 
 if __name__ == "__main__":
-    main(changed_files)
+    main(changed_files.split())
