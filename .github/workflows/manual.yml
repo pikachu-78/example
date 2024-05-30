@@ -1,10 +1,6 @@
 name: Manual workflow
 on: 
-  push:
-    branches:
-     - main
-    paths:
-     - conf/**
+  workflow_dispatch:
 
 
 jobs:
