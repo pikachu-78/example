@@ -7,7 +7,7 @@ parser.add_argument("--changed_files", default="conf/**")
 args = parser.parse_args()
 changed_files = args.changed_files
 
-def main():
+def main(file_paths):
     if file_paths is None:
         print("No file paths provided.")
         return
