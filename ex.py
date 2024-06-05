@@ -23,7 +23,7 @@ def main(file_path):
 
 if __name__ == "__main__":
     # Check if there is exactly one changed file
-    if isinstance(changed_file, list) and len(changed_file) == 1:
-        main(changed_file[0])
+    if len(changed_file) == 1:
+        main(changed_file)
     else:
         print("Exactly one changed file should be provided.")
