@@ -5,7 +5,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--changed_file", required=True)  # Expecting a single comma-separated string
 args = parser.parse_args()
-changed_files = args.changed_file.split(", ")  # Splitting the string into a list
+changed_files = args.changed_file.split(",")
+  # Splitting the string into a list
 
 print("Changed files:", changed_files)  # Add this line for debugging
 
