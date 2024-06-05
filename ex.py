@@ -7,6 +7,8 @@ parser.add_argument("--changed_file", required=True)
 args = parser.parse_args()
 changed_file = args.changed_file
 
+print("Changed file:", changed_file)  # Add this line for debugging
+
 def main(file_path):
     try:
         with open(file_path) as json_file:
