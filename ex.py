@@ -3,18 +3,17 @@ import argparse
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--changed_file", required=True)  # Expecting a single comma-separated string
+parser.add_argument("--changed_file")  # Expecting a single comma-separated string
 args = parser.parse_args()
-changed_files = args.changed_file.split(",")
+changed_files = args.changed_file.split
   # Splitting the string into a list
 
 print("Changed files:", changed_files)  # Add this line for debugging
 
 def main(file_paths):
-    if len(file_paths) > 1:
-        print("Only one file needs to be changed. Please specify only one file.")
-        return
-    
+    # if len(file_paths) > 1:
+    #     print("Only one file needs to be changed. Please specify only one file.")
+    #     return    
     for file_path in file_paths:
         try:
             with open(file_path) as json_file:
