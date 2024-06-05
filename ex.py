@@ -10,6 +10,10 @@ changed_files = args.changed_file
 print("Changed files:", changed_files)  # Add this line for debugging
 
 def main(file_paths):
+    if len(file_paths) > 1:
+        print("Only one file needs to be changed. Please specify only one file.")
+        return
+    
     for file_path in file_paths:
         try:
             with open(file_path) as json_file:
