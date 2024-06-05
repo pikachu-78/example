@@ -22,8 +22,4 @@ def main(file_path):
         print(f"File {file_path} is not a valid JSON file")
 
 if __name__ == "__main__":
-    # Check if there is exactly one changed file
-    if len(changed_file) == 1:
-        main(changed_file)
-    else:
-        print("Exactly one changed file should be provided.")
+    main(changed_file)
