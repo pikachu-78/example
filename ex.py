@@ -3,7 +3,7 @@ import argparse
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--changed_file", required=True)
+parser.add_argument("--changed_file")
 args = parser.parse_args()
 changed_file = args.changed_file
 
