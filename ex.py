@@ -3,29 +3,25 @@ import argparse
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--changed_files", default="conf/**")
+parser.add_argument("--changed_file", required=True)
 args = parser.parse_args()
-changed_files = args.changed_files
+changed_file = args.changed_file
 
-def main(file_paths):
-    if file_paths is None:
-        print("No file paths provided.")
-        return
-    for file_path in file_paths:
-        try:
-            with open(file_path) as json_file:
-                teams = json.load(json_file)
-                for team_data in teams:
-                    print(team_data['name'])
-                    print(team_data['roll'])
-        except FileNotFoundError:
-            print(f"File {file_path} not found")
-        except json.JSONDecodeError:
-            print(f"File {file_path} is not a valid JSON file")
-
+def main(file_path):
+    try:
+        with open(file_path) as json_file:
+            teams = json.load(json_file)
+            for team_data in teams:
+                print(team_data['name'])
+                print(team_data['roll'])
+    except FileNotFoundError:
+        print(f"File {file_path} not found")
+    except json.JSONDecodeError:
+        print(f"File {file_path} is not a valid JSON file")
 
 if __name__ == "__main__":
-    if len(changed_files) != 1:
-        main()
+    # Check if there is exactly one changed file
+    if isinstance(changed_file, list) and len(changed_file) == 1:
+        main(changed_file[0])
     else:
-        main(changed_files)
+        print("Exactly one changed file should be provided.")
