@@ -19,5 +19,6 @@ jobs:
           conf/**
     - name: Run API request
       if: steps.changed-files-specific.outputs.any_changed == 'true'
-      run : |
-        python3 ex.py --changed_files="${{steps.changed-files-specific.outputs.all_changed_files }}"
+      run: |
+         python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+
