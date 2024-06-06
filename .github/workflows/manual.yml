@@ -1,11 +1,11 @@
 name: Manual workflow
 on:
-  # push:
-  #   branches:
-  #    - main
-  #   paths:
-  #    - conf/**
-  workflow_dispatch:
+  push:
+    branches:
+     - main
+    paths:
+     - conf/**
+  # workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
