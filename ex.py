@@ -24,6 +24,7 @@ def main(file_paths):
 
 if __name__ == "__main__":
     if len(changed_files) > 1:
+        print(len(changed_files))
         print("Multiple changed files detected. Exiting without running main function.")
     else:
         main(changed_files)
