@@ -9,10 +9,12 @@ changed_files = args.changed_file.split()  # Split the input string on whitespac
 
 print("Changed files:", changed_files)  # Add this line for debugging
 
-def main(file_paths):
-    for file_path in file_paths:
+# def main(file_paths):
+def main(changed_files):
+    # for file_path in file_paths:
         try:
-            with open(file_path) as json_file:
+            # with open(file_path) as json_file:
+            with open(changed_files) as json_file:
                 teams = json.load(json_file)
                 for team_data in teams:
                     print(team_data['name'])
