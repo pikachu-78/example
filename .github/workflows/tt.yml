@@ -1,0 +1,30 @@
+name: Update JSON File
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Get changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            con/team.json  # Adjust the path to your JSON file if needed
+      
+      - name: Update JSON file
+        uses: restackio/update-json-file-action@v2.1
+        with:
+          file: con/team.json
+          fields: |
+            {
+              "name": "sam_updated",
+              "roll": "oneiii-1"
+            }
