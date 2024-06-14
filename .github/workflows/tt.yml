@@ -20,7 +20,7 @@ jobs:
             con/team.json  # Adjust the path to your JSON file if needed
       
       - name: Update JSON file
-        uses: restackio/update-json-file-action@v2.1
+        uses: restackio/update-json-file-action@2.1
         with:
           file: con/team.json
           fields: |
