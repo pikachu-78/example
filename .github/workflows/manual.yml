@@ -1,29 +1,25 @@
-name: Manual workflow
+name: Update JSON File
+
 on:
   push:
     branches:
-     - main
-    paths:
-     - conf/**
-  # workflow_dispatch:
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup python
-      uses: actions/setup-python@v5
-    - name: Install dependencies
-      run: |
-         pip install --upgrade pip
-    - name: Get changed files
-      id: changed-files-specific
-      uses: tj-actions/changed-files@v40
-      with:
-        files: |
-          conf/**
-    - name: Run API request
-      if: steps.changed-files-specific.outputs.any_changed == 'true'
-      run: |
-         python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+      - main  # Change this to match your branch name
 
+jobs:
+  update_json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt  # If you have any dependencies
+
+    - name: Run Python script
+      run: python update_json.py
