@@ -20,7 +20,7 @@ jobs:
             conf/team.json  # Adjust the path to your JSON file if needed
       
       - name: Update JSON values
-        uses: restack/update-json-values-action@v1.0.0
+        uses: restack/update-json-values-action@1.0.0
         with:
           file: conf/team.json
           values: |
