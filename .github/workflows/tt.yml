@@ -22,7 +22,7 @@ jobs:
       - name: Update JSON file
         uses: restackio/update-json-file-action@2.1
         with:
-          file: con/team.json
+          file: conf/team.json
           fields: |
             {
               "name": "sam_updated",
