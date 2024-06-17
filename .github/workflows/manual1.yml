@@ -1,0 +1,33 @@
+name: Manual workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'conf/**'  # Trigger only when files under conf/ directory change
+  pull_request:
+    paths:
+      - 'conf/**'  # Trigger only when files under conf/ directory change
+  # workflow_dispatch:  # Manual triggering from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+      - name: Get changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            conf/**
+      - name: Run API request
+        if: ${{ github.event_name == 'push' && steps.changed-files-specific.outputs.any_changed == 'true' }}
+        run: |
+          python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
