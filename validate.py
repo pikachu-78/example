@@ -32,6 +32,7 @@ def validate_json(json_data, schema_data):
 def load_json(file_paths):
     for file_path in file_paths:
         try:
+            print(file_path)
             with open(file_path) as json_file:
                 return json.load(json_file)
         except FileNotFoundError:
