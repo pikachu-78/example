@@ -20,15 +20,16 @@ def validate_is_not_empty(validator, isNotEmpty, instance, schema):
 jsonschema.Draft7Validator.VALIDATORS['isNotEmpty'] = validate_is_not_empty
 
 def validate_json(json_data, schema_data):
-    try:
-        validator = jsonschema.Draft7Validator(schema_data)
-        validator.validate(json_data)
+    validator = jsonschema.Draft7Validator(schema_data)
+    validation_errors = list(validator.iter_errors(json_data))
+    if validation_errors:
+        print("JSON is not valid against the schema.")
+        for error in validation_errors:
+            print(error)
+        return False
+    else:
         print("JSON is valid against the schema.")
         return True
-    except jsonschema.exceptions.ValidationError as e:
-        print("JSON is not valid against the schema.")
-        print(e)
-        return False
 
 def load_json(file_paths):
     for file_path in file_paths:
