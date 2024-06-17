@@ -34,7 +34,7 @@ def load_json(file_paths):
     for file_path in file_paths:
         try:
             with open(file_path) as json_file:
-                return json.load(file)
+                return json.load(json_file)
         except FileNotFoundError:
             print(f"File {file_path} not found")
         except json.JSONDecodeError:
