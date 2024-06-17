@@ -34,4 +34,3 @@ jobs:
             python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
           else
             python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
-          fi
