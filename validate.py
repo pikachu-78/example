@@ -1,14 +1,7 @@
 import json
 import jsonschema
 import argparse
-import sys 
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--changed_file")  # Expecting a single comma-separated string
-args = parser.parse_args()
-changed_files = args.changed_file.split()  # Split the input string on whitespace
-
-print("Changed files:", changed_files)  
+import sys
 
 # Custom validation function for 'isNotEmpty'
 def validate_is_not_empty(validator, isNotEmpty, instance, schema):
@@ -29,36 +22,44 @@ def validate_json(json_data, schema_data):
     except jsonschema.exceptions.ValidationError as e:
         raise e 
 
-def load_json(file_paths):
-    for file_path in file_paths:
-        try:
-            print(file_path)
-            with open(file_path) as json_file:
-                return json.load(json_file)
-        except FileNotFoundError:
-            print(f"File {file_path} not found")
-        except json.JSONDecodeError:
-            print(f"File {file_path} is not a valid JSON file")
-
-def loads_json(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file)
+def load_json(file_path):
+    try:
+        with open(file_path) as json_file:
+            return json.load(json_file)
+    except FileNotFoundError:
+        print(f"File {file_path} not found")
+    except json.JSONDecodeError:
+        print(f"File {file_path} is not a valid JSON file")
+    return None
 
 def main():
-    # Load JSON data
-    json_data = load_json(changed_files)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--changed_files", nargs='+', help="List of changed JSON files")
+    args = parser.parse_args()
 
-    # Load JSON schema
-    schema_file_path = 'schema.json'
-    schema_data = loads_json(schema_file_path)
+    changed_files = args.changed_files
 
-    # Validate JSON against the schema
-    try:
-        validate_json(json_data, schema_data)
-    except jsonschema.exceptions.ValidationError as e:
-        print("JSON is not valid against the schema.")
-        print(e)
-        sys.exit(1)  # Exit with failure status code
+    if not changed_files:
+        print("No files provided.")
+        sys.exit(1)
+
+    for file_path in changed_files:
+        print(f"Validating file: {file_path}")
+        json_data = load_json(file_path)
+
+        if json_data is not None:
+            # Load JSON schema
+            schema_file_path = 'schema.json'
+            schema_data = load_json(schema_file_path)
+
+            if schema_data is not None:
+                # Validate JSON against the schema
+                try:
+                    validate_json(json_data, schema_data)
+                except jsonschema.exceptions.ValidationError as e:
+                    print(f"JSON in file {file_path} is not valid against the schema.")
+                    print(e)
+                    sys.exit(1)  # Exit with failure status code
 
 if __name__ == "__main__":
     main()
