@@ -40,13 +40,17 @@ def load_json(file_paths):
         except json.JSONDecodeError:
             print(f"File {file_path} is not a valid JSON file")
 
+def loads_json(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
 def main():
     # Load JSON data
     json_data = load_json(changed_files)
 
     # Load JSON schema
     schema_file_path = 'schema.json'
-    schema_data = load_json(schema_file_path)
+    schema_data = loads_json(schema_file_path)
 
     # Validate JSON against the schema
     validate_json(json_data, schema_data)
