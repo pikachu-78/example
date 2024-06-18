@@ -9,6 +9,8 @@ parser.add_argument("--changed_file")  # Expecting a single comma-separated stri
 args = parser.parse_args()
 changed_files = args.changed_file.split()  # Split the input string on whitespace
 token = os.getenv('TOKEN')
+parser.add_argument("branchname")
+name = args.branchname
 
 print("Changed files:", changed_files)  
 
@@ -19,7 +21,7 @@ github_headers = {
 owner="pikachu-78"
 repo="example"
 
-github_api = f'https://api.github.com/repos/{owner}/{repo}/branches'
+github_api = f'https://api.github.com/repos/{owner}/{repo}/branches/{name}'
 response = requests.get(github_api, headers=github_headers)
 response.raise_for_status()
 file_content = response.json()
