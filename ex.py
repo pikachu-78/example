@@ -8,8 +8,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--changed_file")  # Expecting a single comma-separated string
 args = parser.parse_args()
 changed_files = args.changed_file.split()  # Split the input string on whitespace
-# token = os.getenv('TOKEN')
-token="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"
+token = os.getenv('TOKEN')
+# token="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"
 print("Token:", token)
 # parser.add_argument("--input_argument")
 # name = args.input_argument
