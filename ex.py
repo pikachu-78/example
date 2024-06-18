@@ -20,7 +20,7 @@ github_headers = {
 }
 owner = "pikachu-78"
 repo = "example"
-name = "123"
+name = "456"
 
 github_api = f'https://api.github.com/repos/{owner}/{repo}/branches/{name}'
 print("GitHub API URL:", github_api)  # Debugging output
