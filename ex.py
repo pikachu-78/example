@@ -22,7 +22,8 @@ repo="example"
 github_api = f'https://api.github.com/repos/{owner}/{repo}/branches'
 response = requests.get(github_api, headers=github_headers)
 response.raise_for_status()
-print(response)
+file_content = response.json()
+print(file_content)
 
 def main(file_paths):
     for file_path in file_paths:
