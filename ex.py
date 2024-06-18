@@ -9,25 +9,29 @@ parser.add_argument("--changed_file")  # Expecting a single comma-separated stri
 args = parser.parse_args()
 changed_files = args.changed_file.split()  # Split the input string on whitespace
 token = os.getenv('TOKEN')
+# token = "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"  # Use if not using environment variable
 print("Token:", token)
-# parser.add_argument("--input_argument")
-# name = args.input_argument
 
-print("Changed files:", changed_files)  
+print("Changed files:", changed_files)
 
 github_headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json'
 }
-owner="pikachu-78"
-repo="example"
-name="123"
+owner = "pikachu-78"
+repo = "example"
+name = "123"
 
 github_api = f'https://api.github.com/repos/{owner}/{repo}/branches/{name}'
-response = requests.get(github_api, headers=github_headers)
-response.raise_for_status()
-file_content = response.json()
-print(file_content)
+print("GitHub API URL:", github_api)  # Debugging output
+
+try:
+    response = requests.get(github_api, headers=github_headers)
+    response.raise_for_status()
+    file_content = response.json()
+    print(file_content)
+except requests.exceptions.HTTPError as err:
+    print(f"HTTP error occurred: {err}")
 
 def main(file_paths):
     for file_path in file_paths:
@@ -44,8 +48,3 @@ def main(file_paths):
 
 if __name__ == "__main__":
     main(changed_files)
-    # if len(changed_files) > 1:
-    #     print(len(changed_files))
-    #     print("Multiple changed files detected. Exiting without running main function.")
-    # else:
-    #     main(changed_files)
