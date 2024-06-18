@@ -17,7 +17,7 @@ github_headers = {
 owner="pikachu-78"
 repo="example"
 
-github_api = f'https://api.github.com/repos/{owner}/{repo}/branches
+github_api = f'https://api.github.com/repos/{owner}/{repo}/branches'
 response = requests.get(github_api, headers=github_headers)
 response.raise_for_status()
 print(response)
