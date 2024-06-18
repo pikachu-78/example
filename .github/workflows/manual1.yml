@@ -33,6 +33,8 @@ jobs:
             conf/**
       - name: Run script based on event
         run: |
+          env:
+            TOKEN: ${{ secrets.TOKEN }}
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
           else
