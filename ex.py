@@ -22,8 +22,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     changed_files = args.changed_file.split()  # Split the input string on whitespace
 
-    token = os.getenv('TOKEN')
-    # token = "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"  # Use if not using environment variable
+    token = os.getenv('DIVYA')
     print("Token:", token)
 
     print("Changed files:", changed_files)
