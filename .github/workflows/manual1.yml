@@ -33,7 +33,7 @@ jobs:
             conf/**
       - name: Run script based on event
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          DIVYA: ${{ vars.DIVYA }}
         run: |
           if [[ "${{ steps.changed-files-specific.outputs.any_changed }}" == 'true' ]]; then
             if [[ "${{ github.event_name }}" == 'pull_request' ]]; then
