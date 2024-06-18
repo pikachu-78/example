@@ -40,5 +40,5 @@ jobs:
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
           else
-            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" "${{ github.event_name == 'workflow_dispatch' ? inputs.domainname : 'value_for_push' }}"
+            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="${{ github.event_name == 'workflow_dispatch' ? inputs.domainname : 'value_for_push' }}"
           fi
