@@ -6,8 +6,21 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--changed_file")  # Expecting a single comma-separated string
 args = parser.parse_args()
 changed_files = args.changed_file.split()  # Split the input string on whitespace
+token = os.getenv('TOKEN')
 
 print("Changed files:", changed_files)  
+
+github_headers = {
+    'Authorization': f'token {token}',
+    'Accept': 'application/vnd.github.v3+json'
+}
+owner="pikachu-78"
+repo="example"
+
+github_api = f'https://api.github.com/repos/{owner}/{repo}/branches
+response = requests.get(github_api, headers=github_headers)
+response.raise_for_status()
+print(response)
 
 def main(file_paths):
     for file_path in file_paths:
