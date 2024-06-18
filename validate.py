@@ -20,7 +20,6 @@ def validate_is_not_empty(validator, isNotEmpty, instance, schema):
     else:
         return  # Skip validation for other types
 
-
 # Registering the custom keyword 'isNotEmpty'
 jsonschema.Draft7Validator.VALIDATORS['isNotEmpty'] = validate_is_not_empty
 
@@ -31,20 +30,22 @@ def validate_json(json_data, schema_data):
         print("JSON is valid against the schema.")
         return True
     except jsonschema.exceptions.ValidationError as e:
-        raise e
+        print("JSON is not valid against the schema.")
+        print(e)
+        sys.exit(1)  # Exit with failure status code
 
 def load_json(file_paths):
     loaded_json_data = []
-    print(file_paths)
     for file_path in file_paths:
-        print(file_path)
         try:
             with open(file_path) as json_file:
                 loaded_json_data.append(json.load(json_file))
         except FileNotFoundError:
             print(f"File {file_path} not found")
+            sys.exit(1)  # Exit if file not found
         except json.JSONDecodeError:
             print(f"File {file_path} is not a valid JSON file")
+            sys.exit(1)  # Exit if JSON decoding error
     return loaded_json_data
 
 def loads_json(file_path):
@@ -61,12 +62,7 @@ def main():
 
     # Validate each JSON against the schema
     for json_data in json_data_list:
-        try:
-            validate_json(json_data, schema_data)
-        except jsonschema.exceptions.ValidationError as e:
-            print("JSON is not valid against the schema.")
-            print(e)
-            sys.exit(1)  # Exit with failure status code
+        validate_json(json_data, schema_data)
 
 if __name__ == "__main__":
     main()
