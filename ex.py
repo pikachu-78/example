@@ -9,8 +9,8 @@ parser.add_argument("--changed_file")  # Expecting a single comma-separated stri
 args = parser.parse_args()
 changed_files = args.changed_file.split()  # Split the input string on whitespace
 token = os.getenv('TOKEN')
-parser.add_argument("branchname")
-name = args.branchname
+parser.add_argument("--input_argument")
+name = args.input_argument
 
 print("Changed files:", changed_files)  
 
