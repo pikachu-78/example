@@ -9,7 +9,11 @@ on:
   pull_request:
     paths:
       - 'conf/**' # Trigger only when files under conf/ directory change
-  # workflow_dispatch: # Manual triggering from the Actions tab
+  workflow_dispatch: # Manual triggering from the Actions tab
+    inputs:
+      branchname:
+        description: 'Branch Name'
+        required: true
 
 jobs:
   build:
@@ -34,7 +38,7 @@ jobs:
         if: ${{ steps.changed-files-specific.outputs.any_changed == 'true' }}
         run: |
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-            python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+            python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="value_for_pull_request"
           else
-            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="${{ github.event_name == 'workflow_dispatch' ? inputs.domainname : 'value_for_push' }}"
           fi
