@@ -1,6 +1,7 @@
 import json
 import argparse
 import os
+import requests
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
