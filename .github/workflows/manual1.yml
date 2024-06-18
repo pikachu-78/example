@@ -5,11 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'conf/**'  # Trigger only when files under conf/ directory change
+      - 'conf/**'
   pull_request:
     paths:
-      - 'conf/**'  # Trigger only when files under conf/ directory change
-  # workflow_dispatch:  # Manual triggering from the Actions tab
+      - 'conf/**'
 
 jobs:
   build:
