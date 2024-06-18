@@ -12,10 +12,14 @@ print("Changed files:", changed_files)
 
 # Custom validation function for 'isNotEmpty'
 def validate_is_not_empty(validator, isNotEmpty, instance, schema):
-    if not isinstance(instance, str):
-        return  # only validate strings
-    if instance.strip() == "":
-        yield jsonschema.ValidationError("Value must not be empty")
+    if isinstance(instance, (str, int, float, list, dict)):  # Include types you want to validate
+        if isinstance(instance, str) and instance.strip() == "":
+            yield jsonschema.ValidationError("Value must not be empty")
+        elif isinstance(instance, (int, float)) and instance == "":
+            yield jsonschema.ValidationError("Value must not be empty")
+    else:
+        return  # Skip validation for other types
+
 
 # Registering the custom keyword 'isNotEmpty'
 jsonschema.Draft7Validator.VALIDATORS['isNotEmpty'] = validate_is_not_empty
