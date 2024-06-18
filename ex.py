@@ -15,7 +15,7 @@ print("Token:", token)
 print("Changed files:", changed_files)
 
 github_headers = {
-    'Authorization': f'token {token}',
+    'Authorization': f'Bearer {token}',
     'Accept': 'application/vnd.github.v3+json'
 }
 owner = "pikachu-78"
