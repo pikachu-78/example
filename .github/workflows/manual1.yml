@@ -31,14 +31,14 @@ jobs:
         with:
           files: |
             conf/**
-
-      - name: Run appropriate script
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
-        if: ${{ steps.changed-files-specific.outputs.any_changed == 'true' }}
+      - name: Run script based on event
         run: |
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
           else
-            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="${{ github.event_name == 'workflow_dispatch' && inputs.branchname != '' ? inputs.branchname : 'value_for_push' }}"
+            if [[ ${{ github.event_name }} == 'workflow_dispatch' && inputs.branchname != '' ]]; then
+              python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="${{ inputs.branchname }}"
+            else
+              python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" --input_argument="value_for_push"
+            fi
           fi
