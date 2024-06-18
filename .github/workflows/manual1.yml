@@ -29,6 +29,8 @@ jobs:
             conf/**
 
       - name: Run appropriate script
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         if: ${{ steps.changed-files-specific.outputs.any_changed == 'true' }}
         run: |
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
