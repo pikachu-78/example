@@ -32,11 +32,15 @@ jobs:
           files: |
             conf/**
       - name: Run script based on event
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
-          env:
-            TOKEN: ${{ secrets.TOKEN }}
-          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-            python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+          if [[ "${{ steps.changed-files-specific.outputs.any_changed }}" == 'true' ]]; then
+            if [[ "${{ github.event_name }}" == 'pull_request' ]]; then
+              python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+            else
+              python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" 
+            fi
           else
-            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}" 
+            echo "No files changed in 'conf/' directory. Skipping script execution."
           fi
