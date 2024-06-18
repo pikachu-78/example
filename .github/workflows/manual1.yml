@@ -1,12 +1,9 @@
-name: Manual workflow
+name: Main workflow
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'conf/**'
-  pull_request:
     paths:
       - 'conf/**'
 
@@ -29,7 +26,6 @@ jobs:
       - name: Run appropriate script
         if: ${{ steps.changed-files-specific.outputs.any_changed == 'true' }}
         run: |
-          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-            python3 validate.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
-          else
-            python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+          python3 ex.py --changed_file="${{ steps.changed-files-specific.outputs.all_changed_files }}"
+
+            
