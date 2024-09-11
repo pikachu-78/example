@@ -1,0 +1,25 @@
+name: Sync JSON Data to Database
+
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyodbc
+        pip install openpyxl
+
+    - name: Run Python script
+      run: |
+        python3 json_to_db.py "${{ secrets.JIRA_TEST_DB }}"
