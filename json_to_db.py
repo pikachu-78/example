@@ -5,5 +5,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("db_token")
 args = parser.parse_args()
-conn_str = args.db_token
+db_token = args.db_token
+conn_str = f"DRIVER={{SQL Server}};{db_token}"
 print(conn_str)
